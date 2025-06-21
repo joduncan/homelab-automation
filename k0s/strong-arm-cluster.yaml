@@ -1,0 +1,34 @@
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: strong-arm-cluster
+spec:
+  hosts:
+  - ssh:
+      address: 192.168.1.67
+      user: duncan
+      port: 22
+      keyPath: /Users/duncan/.ssh/id_rsa.pk
+    role: controller
+  - ssh:
+      address: 192.168.1.80
+      user: duncan
+      port: 22
+      keyPath: /Users/duncan/.ssh/id_rsa.pk
+    role: worker
+  k0s:
+    version: 1.30.2+k0s.0
+    dynamicConfig: false
+    config:
+      spec:
+        telemetry:
+          enabled: false
+        # storage:
+          # etcd:
+            # externalCluster:
+              # endpoints: ["https://192.168.1.5:2379","https://192.168.1.6:2379","https://192.168.1.7:2379"]
+              # etcdPrefix: arm-cluster
+              # caFile: "/etc/k0s/ssl/ca.pem"
+              # clientCertFile: "/etc/k0s/ssl/client.pem"
+              # clientKeyFile: "/etc/k0s/ssl/client-key.pem"
+          # type: etcd
